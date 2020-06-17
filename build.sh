@@ -3,8 +3,8 @@
 set -e
 #set -x
 
-#GRAAL=~/soft/graalvm-ce-java11-20.1.0
-GRAAL=~/soft/graalvm-ce-java11-20.0.0
+GRAAL=~/soft/graalvm-ce-java11-20.1.0
+#GRAAL=~/soft/graalvm-ce-java11-20.0.0
 UPX=~/soft/upx-3.95-amd64_linux
 
 graal_version=$($GRAAL/bin/java -version 2>&1 | grep '64' | grep GraalVM | sed -E 's#.+(GraalVM.+) \(.+#\1#')
@@ -59,16 +59,11 @@ then
     bash -c "cd $GRAAL/bin/ ; ./gu install native-image"
 fi
 
-#$GRAAL/bin/native-image \
-#    --no-fallback \
-#    -H:IncludeResources='.*js$' \
-#    -H:Log=registerResource: \
-#    -cp "$CP" $BASE_PACKAGE.$MAIN_CLASS \
-#    $EXECUTABLE
-
 $GRAAL/bin/native-image \
-    -H:ResourceConfigurationFiles=../resources-config.json \
+    --no-fallback \
     --language:js \
+    -H:IncludeResources='.*js$' \
+    -H:Log=registerResource: \
     -cp "$CP" $BASE_PACKAGE.$MAIN_CLASS \
     $EXECUTABLE
 
@@ -78,8 +73,9 @@ ls -lh ./$EXECUTABLE
 #echo Upx
 #echo
 #
-#rm -f ./$EXECUTABLE
-#$UPX/upx ./$BASE_PACKAGE.$EXECUTABLE -o$EXECUTABLE
+
+#mv ./$EXECUTABLE ./${EXECUTABLE}_orig
+#$UPX/upx ./${EXECUTABLE}_orig -o$EXECUTABLE
 #ls -lh ./$EXECUTABLE
 
 
