@@ -6,8 +6,6 @@ import org.graalvm.polyglot.Value;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +14,7 @@ public class App {
   @SneakyThrows
   public static void main(String[] args) {
     String inputJsonStr = new String(System.in.readAllBytes(), StandardCharsets.UTF_8);
-    String query = args[0];
+    String query = args.length == 0 ? "" : args[0];
 
     List<String> scripts = new ArrayList<>();
 
