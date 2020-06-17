@@ -8,46 +8,37 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
   @SneakyThrows
   public static void main(String[] args) {
-    //    System.out.println("Hello Java!");
+    String inputJsonStr = new String(System.in.readAllBytes(), StandardCharsets.UTF_8);
+    String query = args[0];
 
-    URL jsFileResource = Thread.currentThread().getContextClassLoader().getResource("jsqry.js");
+    List<String> scripts = new ArrayList<>();
 
-    if (jsFileResource == null) {
-      throw new IllegalStateException("no js lib file");
+    String[] assets = {"jsqry.js", "app.js"};
+
+    for (String asset : assets) {
+      URL jsFileResource = Thread.currentThread().getContextClassLoader().getResource(asset);
+
+      if (jsFileResource == null) {
+        throw new IllegalStateException("no js file: " + asset);
+      }
+
+      scripts.add(new String(Files.readAllBytes(Paths.get(jsFileResource.toURI()))));
     }
 
-    String jsFileContent = new String(Files.readAllBytes(Paths.get(jsFileResource.toURI())));
-
-    String inputJsonStr = new String(System.in.readAllBytes(), StandardCharsets.UTF_8);
-
     try (Context context = Context.create()) {
-      //      context.eval("js", "print('Hello JavaScript!');");
+      for (String script : scripts) {
+        context.eval("js", script);
+      }
 
-      context.eval("js", jsFileContent);
+      Value doWork = context.eval("js", "doWork");
 
-      //      Value queryFunction = context.eval("js", "jsqry.query");
-      //      System.out.println(queryFunction);
-
-      Value logicFunction =
-          context.eval(
-              "js",
-              "(jsonStr, queryStr) => { "
-                  + "let json;"
-                  + "try {"
-                  + " json = JSON.parse(jsonStr);"
-                  + "} catch (e) {"
-                  + " print('Wrong JSON');"
-                  + " return"
-                  + "}"
-                  + "const res = jsqry.query(json, queryStr);"
-                  + "print(JSON.stringify(res, null, 2));"
-                  + " }");
-
-      logicFunction.executeVoid(inputJsonStr, args[0]);
+      doWork.executeVoid(inputJsonStr, query);
     }
   }
 }
