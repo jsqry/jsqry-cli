@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class App {
   @SneakyThrows
@@ -28,7 +29,11 @@ public class App {
         throw new IllegalStateException("no js file: " + asset);
       }
 
-      scripts.add(new String(Files.readAllBytes(Paths.get(jsFileResource.toURI()))));
+      //      For some reason with native-image this fails:
+      // java.nio.file.FileSystemNotFoundException: Provider "resource" not installed
+      //      scripts.add(new String(Files.readAllBytes(Paths.get(jsFileResource.toURI()))));
+
+      scripts.add(new Scanner(jsFileResource.openStream()).useDelimiter("\\A").next());
     }
 
     try (Context context = Context.create()) {
