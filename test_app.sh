@@ -20,3 +20,4 @@ echo $CP
 
 echo '[{"a":1},{"a":2}]' | $JAVA -cp "$CP" com.github.jsqry.cli.App "a"
 echo 'wrong' | $JAVA -cp "$CP" com.github.jsqry.cli.App "a"
+echo '[]' | $JAVA -cp "$CP" com.github.jsqry.cli.App "]"

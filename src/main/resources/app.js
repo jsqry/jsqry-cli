@@ -3,9 +3,15 @@ function doWork(jsonStr, queryStr) {
     try {
         json = JSON.parse(jsonStr);
     } catch (e) {
-        print('Wrong JSON');
+        print('error: Wrong JSON');
         return
     }
-    const res = jsqry.query(json, queryStr);
+    let res;
+    try {
+        res = jsqry.query(json, queryStr);
+    } catch (e) {
+        print('error: ' + e);
+        return
+    }
     print(JSON.stringify(res, null, 2));
 }
