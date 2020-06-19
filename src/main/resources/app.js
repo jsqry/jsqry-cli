@@ -1,4 +1,4 @@
-function doWork(jsonStr, queryStr) {
+function doWork(jsonStr, queryStr, useFirst) {
     let json;
     try {
         json = JSON.parse(jsonStr);
@@ -8,7 +8,7 @@ function doWork(jsonStr, queryStr) {
     }
     let res;
     try {
-        res = jsqry.query(json, queryStr);
+        res = (useFirst ? jsqry.first : jsqry.query)(json, queryStr);
     } catch (e) {
         console.error('error: ' + e);
         return false;

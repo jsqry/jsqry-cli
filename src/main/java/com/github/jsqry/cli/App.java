@@ -25,6 +25,10 @@ public class App {
     help.setRequired(false);
     options.addOption(help);
 
+    Option first = new Option("1", "first", false, "return first result element");
+    first.setRequired(false);
+    options.addOption(first);
+
     CommandLineParser parser = new DefaultParser();
     CommandLine cmd;
 
@@ -76,7 +80,8 @@ public class App {
       Value doWork = context.eval("js", "doWork");
 
       String inputJsonStr = new String(System.in.readAllBytes(), StandardCharsets.UTF_8);
-      Value result = doWork.execute(inputJsonStr, query);
+
+      Value result = doWork.execute(inputJsonStr, query, cmd.hasOption(first.getLongOpt()));
       if (!result.asBoolean()) {
         System.exit(1);
       }

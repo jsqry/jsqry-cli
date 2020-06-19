@@ -19,5 +19,6 @@ CP=$(mvn -q exec:exec -Dexec.executable=echo -Dexec.args="%classpath")
 echo $CP
 
 echo '[{"a":1},{"a":2}]' | $JAVA -cp "$CP" com.github.jsqry.cli.App "a"
+echo '[{"a":1},{"a":2}]' | $JAVA -cp "$CP" com.github.jsqry.cli.App -1 "a[1]"
 echo 'wrong' | $JAVA -cp "$CP" com.github.jsqry.cli.App "a"
 echo '[]' | $JAVA -cp "$CP" com.github.jsqry.cli.App "]"
