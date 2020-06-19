@@ -42,7 +42,7 @@ public class App {
     }
 
     if (cmd.hasOption(version.getLongOpt())) {
-      System.out.println(Constants.getFullVersion());
+      System.out.println(Constants.getVersion());
       System.exit(0);
     }
 
@@ -76,7 +76,10 @@ public class App {
       Value doWork = context.eval("js", "doWork");
 
       String inputJsonStr = new String(System.in.readAllBytes(), StandardCharsets.UTF_8);
-      doWork.executeVoid(inputJsonStr, query);
+      Value result = doWork.execute(inputJsonStr, query);
+      if (!result.asBoolean()) {
+        System.exit(1);
+      }
     }
   }
 
