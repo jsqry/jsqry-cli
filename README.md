@@ -11,3 +11,18 @@ $ echo '[{"a":1},{"a":2}]' | jsqry -1 'a' # first
 ```
 
 The output is pretty-printed by default.
+
+## Install
+
+Sorry, but only Linux x64 is supported at the moment. Hopefully this will improve.
+
+To install or update the tool simply run the command below.
+
+```bash
+$ sudo bash -e -c "
+curl -L https://github.com/jsqry/jsqry-cli/releases/download/v0.0.1/jsqry-linux-amd64.gz \
+    | zcat > /usr/local/bin/jsqry
+chmod +x /usr/local/bin/jsqry
+echo \"jsqry \$(jsqry -v) installed successfully\" 
+"
+```
