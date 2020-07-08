@@ -1,4 +1,7 @@
-# jsqry-cli
+# [DEPRECATED] jsqry-cli
+
+<span style="color:red; font-size:2em">⚠️ This project is superseded by [jsqry-cli2](https://github.com/jsqry/jsqry-cli2) ⚠️
+</span>
 
 Command-line jsqry (like jq)
 
