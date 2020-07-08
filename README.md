@@ -1,7 +1,6 @@
 # [DEPRECATED] jsqry-cli
 
-# <u>⚠️ This project is superseded by [jsqry-cli2](https://github.com/jsqry/jsqry-cli2) ⚠️
-</u>
+# <ins>⚠️ This project is superseded by [jsqry-cli2](https://github.com/jsqry/jsqry-cli2) ⚠️</u>
 
 Command-line jsqry (like jq)
 
